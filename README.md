@@ -1,6 +1,6 @@
-# FIAP Challenge - Checkout Service
+# FIAP Hackathon
 
-Handle order payments
+Manage employee's clock in/out
 
 [![codecov](https://codecov.io/gh/higfonseca/fiap-hackathon/graph/badge.svg?token=8KDSI4TKGQ)](https://codecov.io/gh/higfonseca/fiap-hackathon)
 
