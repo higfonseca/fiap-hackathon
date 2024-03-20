@@ -6,8 +6,8 @@ from app.infrastructure.settings import settings
 from app.presentation.routers import health_router
 
 
-def get_app(container: ApplicationContainer | None = None) -> FastAPI:
-    container = container or ApplicationContainer()
+def get_app() -> FastAPI:
+    container = ApplicationContainer()
     routers = [health_router]
     tags_metadata = [metadata for router in routers if hasattr(router, "metadata") for metadata in router.metadata]
 

@@ -1,5 +1,5 @@
 from sqlalchemy import MetaData
-from sqlalchemy.orm import registry
+from sqlalchemy.orm import registry  # type:ignore[attr-defined]
 
 convention = {
     "ix": "ix_%(column_0_label)s",

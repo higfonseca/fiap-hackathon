@@ -2,7 +2,7 @@
 
 Handle order payments
 
-[![codecov](https://codecov.io/gh/higfonseca/fiap-challenge-checkout/graph/badge.svg?token=TFSWM67ENZ)](https://codecov.io/gh/higfonseca/fiap-challenge-checkout)
+[![codecov](https://codecov.io/gh/higfonseca/fiap-hackathon/graph/badge.svg?token=8KDSI4TKGQ)](https://codecov.io/gh/higfonseca/fiap-hackathon)
 
 <br>
 

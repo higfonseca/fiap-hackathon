@@ -1,5 +1,3 @@
-from unittest.mock import AsyncMock
-
 from alembic import command
 from alembic.config import Config
 from fastapi.testclient import TestClient
@@ -18,19 +16,12 @@ def handle_test_database_and_migrate():
 
 @fixture(autouse=True, scope="function")
 def api_client(request):
-    message_bus_mock = AsyncMock()
-    container = ApplicationContainer(
-        message_bus=message_bus_mock,
-    )
-    app = get_app(container)
+    app = get_app()
     client = TestClient(app, base_url="http://localhost")
 
     request.cls.client = client
-    request.cls.message_bus_mock = message_bus_mock
 
     yield
-
-    message_bus_mock.reset_mock()
 
 
 @fixture(autouse=True)

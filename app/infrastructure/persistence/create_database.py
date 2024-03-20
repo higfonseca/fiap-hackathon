@@ -1,8 +1,8 @@
 from pydoc import locate
 
-from sqlalchemy_utils import database_exists, create_database
+from sqlalchemy_utils import create_database, database_exists
 
-from app.infrastructure.persistence.database import engine
+from app.infrastructure.persistence.database import engine  # type:ignore[attr-defined]
 
 if not database_exists(engine.url):
     print("Creating new database", engine.name)

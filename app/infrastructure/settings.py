@@ -2,7 +2,7 @@ import os
 from enum import Enum
 
 from pydantic_settings import BaseSettings
-from sqlalchemy import URL
+from sqlalchemy import URL  # type:ignore[attr-defined]
 
 
 class Environment(Enum):
@@ -11,7 +11,7 @@ class Environment(Enum):
     PRODUCTION = "production"
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings):  # type: ignore[misc]
     app_name: str = "hackathon"
     environment: Environment = Environment(os.getenv("ENVIRONMENT", "production"))
     is_production: bool = environment is Environment.PRODUCTION
