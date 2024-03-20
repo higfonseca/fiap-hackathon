@@ -24,6 +24,9 @@ logs:
 lint:
 	$(DOCKER_RUNNER) lint_local
 
+lint-ci:
+	$(DOCKER_RUNNER_CI) lint_local
+
 test:
 	$(DOCKER_RUNNER) test
 

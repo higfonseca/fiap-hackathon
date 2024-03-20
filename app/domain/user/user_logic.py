@@ -1,11 +1,11 @@
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from app.domain.user.user import User
 
 
-class PersonLogic:
+class UserLogic:
     @staticmethod
-    def create(id: UUID, name: str, work_email: str) -> User:
+    def create(name: str, work_email: str, id: UUID = uuid4()) -> User:
         return User(
             id=id,
             name=name,

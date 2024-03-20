@@ -4,7 +4,7 @@ import logging
 from dependency_injector.containers import DeclarativeContainer  # pylint: disable=no-name-in-module
 from dependency_injector.providers import Configuration
 
-from app.infrastructure.persistence.database import SessionProvider
+from app.infrastructure.persistence.database import SessionProvider  # type:ignore[attr-defined]
 from app.infrastructure.persistence.mapping_configuration import import_mappers
 
 

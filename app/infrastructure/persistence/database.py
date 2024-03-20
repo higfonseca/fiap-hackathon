@@ -3,7 +3,7 @@ import logging
 
 from dependency_injector import providers
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 from app.infrastructure.settings import settings
 

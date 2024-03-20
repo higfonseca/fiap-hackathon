@@ -1,9 +1,10 @@
 from datetime import datetime, timezone
 
 import factory
-from app.domain.user.person import User
 from faker import Faker
 from faker.providers import internet
+
+from app.domain.user.user import User
 
 fake = Faker()
 fake.add_provider(internet)
