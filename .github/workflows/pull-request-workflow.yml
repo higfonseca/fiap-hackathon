@@ -1,0 +1,31 @@
+name: Pull Request
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python version
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11.1'
+          architecture: 'x64'
+
+      - name: Install dependencies
+        run: make build-ci
+
+      - name: Run tests
+        run: make test-ci
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: higfonseca/fiap-hackathon

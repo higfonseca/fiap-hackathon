@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: hackathon-web
+    build: .
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    ports:
+      - "8800:8800"
+    environment:
+      - ENVIRONMENT=local
+      - WATCHFILES_FORCE_POLLING=true
+      - POSTGRES_HOST=db
+      - POSTGRES_DATABASE_NAME=fiap_db_hackathon
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    volumes:
+      - ./:/build
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    environment:
+      - PGUSER=user
+      - POSTGRES_USER=user
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
