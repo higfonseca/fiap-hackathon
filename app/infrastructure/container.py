@@ -2,10 +2,11 @@
 import logging
 
 from dependency_injector.containers import DeclarativeContainer  # pylint: disable=no-name-in-module
-from dependency_injector.providers import Configuration
+from dependency_injector.providers import Configuration, Factory
 
 from app.infrastructure.persistence.database import SessionProvider  # type:ignore[attr-defined]
 from app.infrastructure.persistence.mapping_configuration import import_mappers
+from app.infrastructure.persistence.repositories.user_postgres_repository import UserPostgresRepository
 
 
 class ApplicationContainer(DeclarativeContainer):
@@ -16,6 +17,7 @@ class ApplicationContainer(DeclarativeContainer):
     session_provider = SessionProvider()
 
     # REPOSITORIES
+    user_repository = Factory(UserPostgresRepository, database_session=session_provider)
 
     # PROVIDERS
 
