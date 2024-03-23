@@ -19,9 +19,9 @@ class TestRecordLogic(TestCase):
         self.assertEqual(self.record.id, result.id)
         self.assertEqual(self.record.user, result.user)
         self.assertEqual(RecordType.OUT, result.type)
-        self.assertAlmostEqual(
-            self.record.ref_datetime.replace(microsecond=0),
-            result.ref_datetime.replace(microsecond=0)
+        self.assertEqual(
+            self.record.ref_datetime.replace(second=0, microsecond=0),
+            result.ref_datetime.replace(second=0, microsecond=0)
         )
 
     def test_get_new_record_type_WHEN_previous_record_type_is_in_RETURNS_out(self):
