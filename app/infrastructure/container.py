@@ -6,6 +6,7 @@ from dependency_injector.providers import Configuration, Factory
 
 from app.infrastructure.persistence.database import SessionProvider  # type:ignore[attr-defined]
 from app.infrastructure.persistence.mapping_configuration import import_mappers
+from app.infrastructure.persistence.repositories.record_postgres_repository import RecordPostgresRepository
 from app.infrastructure.persistence.repositories.user_postgres_repository import UserPostgresRepository
 
 
@@ -18,6 +19,7 @@ class ApplicationContainer(DeclarativeContainer):
 
     # REPOSITORIES
     user_repository = Factory(UserPostgresRepository, database_session=session_provider)
+    record_repository = Factory(RecordPostgresRepository, database_session=session_provider)
 
     # PROVIDERS
 
