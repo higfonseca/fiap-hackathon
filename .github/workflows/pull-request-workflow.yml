@@ -32,3 +32,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: higfonseca/fiap-hackathon
+          target: 80%
+          threshold: 3%
