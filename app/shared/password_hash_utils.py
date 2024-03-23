@@ -1,3 +1,4 @@
+# mypy: disable-error-code="import-untyped, no-any-return"
 from passlib.context import CryptContext
 
 
@@ -9,5 +10,5 @@ class PasswordHashUtils:
         return PasswordHashUtils.pwd_context.hash(password)
 
     @staticmethod
-    def verify_password(plain_password: str, hashed_password: str):
+    def verify_password(plain_password: str, hashed_password: str) -> bool:
         return PasswordHashUtils.pwd_context.verify(plain_password, hashed_password)
