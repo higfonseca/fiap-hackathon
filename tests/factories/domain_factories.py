@@ -20,6 +20,8 @@ class UserFactory(factory.Factory):
     id = factory.Faker("uuid4")
     name = factory.Faker("name")
     work_email = factory.Faker("name")
+    enrollment = factory.Faker("name")
+    password = factory.Faker("password")
     created_at = factory.Faker("date_time", tzinfo=timezone.utc)
     updated_at = factory.Faker("date_time", tzinfo=timezone.utc)
     deleted_at = None
