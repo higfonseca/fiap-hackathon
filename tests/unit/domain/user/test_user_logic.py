@@ -16,9 +16,4 @@ class TestUserLogic(TestCase):
             enrollment=self.user.enrollment,
             password=self.user.password,
         )
-
-        self.assertEqual(self.user.id, result.id)
-        self.assertEqual(self.user.name, result.name)
-        self.assertEqual(self.user.work_email, result.work_email)
-        self.assertEqual(self.user.enrollment, result.enrollment)
-        self.assertEqual(self.user.password, result.password)
+        self.assertEqual(self.user, result)

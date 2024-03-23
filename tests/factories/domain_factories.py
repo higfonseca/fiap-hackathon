@@ -22,9 +22,6 @@ class UserFactory(factory.Factory):
     work_email = factory.Faker("name")
     enrollment = factory.Faker("name")
     password = factory.Faker("password")
-    created_at = factory.Faker("date_time", tzinfo=timezone.utc)
-    updated_at = factory.Faker("date_time", tzinfo=timezone.utc)
-    deleted_at = None
 
 
 class RecordFactory(factory.Factory):
@@ -37,6 +34,6 @@ class RecordFactory(factory.Factory):
     id = factory.Faker("uuid4")
     user = factory.SubFactory(UserFactory)
     type = fuzzy.FuzzyChoice(RecordType).fuzz()
-    ref_datetime = factory.LazyAttribute(lambda x: x.now_utc)
+    ref_datetime = factory.LazyFunction(lambda: datetime.now(timezone.utc))
     ref_month = factory.LazyAttribute(lambda x: x.now_utc.month)
     ref_year = factory.LazyAttribute(lambda x: x.now_utc.year)

@@ -1,10 +1,13 @@
 from unittest import TestCase
 
+from freezegun import freeze_time
+
 from app.domain.record.record_logic import RecordLogic
 from app.domain.record.record_type import RecordType
 from tests.factories.domain_factories import RecordFactory
 
 
+@freeze_time("2024-03-23 10:00:00")
 class TestRecordLogic(TestCase):
     def setUp(self) -> None:
         self.record = RecordFactory(type=RecordType.OUT)
@@ -15,14 +18,7 @@ class TestRecordLogic(TestCase):
             previous_record=RecordFactory(type=RecordType.IN),
             id=self.record.id
         )
-
-        self.assertEqual(self.record.id, result.id)
-        self.assertEqual(self.record.user, result.user)
-        self.assertEqual(RecordType.OUT, result.type)
-        self.assertEqual(
-            self.record.ref_datetime.replace(second=0, microsecond=0),
-            result.ref_datetime.replace(second=0, microsecond=0)
-        )
+        self.assertEqual(self.record, result)
 
     def test_get_new_record_type_WHEN_previous_record_type_is_in_RETURNS_out(self):
         result = RecordLogic.get_new_record_type(RecordFactory(type=RecordType.IN))
