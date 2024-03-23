@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field
-from datetime import datetime
+from dataclasses import dataclass
 from uuid import UUID
 
 
@@ -8,6 +7,5 @@ class User:
     id: UUID
     name: str
     work_email: str
-    created_at: datetime = field(default_factory=datetime.utcnow)
-    updated_at: datetime = field(default_factory=datetime.utcnow)
-    deleted_at: datetime | None = field(default=None)
+    enrollment: str
+    password: str

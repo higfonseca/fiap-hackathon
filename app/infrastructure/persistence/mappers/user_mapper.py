@@ -13,6 +13,8 @@ user_table = Table(
     Column("id", UUID, primary_key=True),
     Column("name", String(255), nullable=False),
     Column("work_email", String(255), nullable=False, index=True, unique=True),
+    Column("enrollment", String(255), nullable=False, index=True, unique=True),
+    Column("password", String(255), nullable=False),
     Column("created_at", DateTime, default=datetime.utcnow),
     Column("updated_at", DateTime, default=datetime.utcnow, onupdate=datetime.utcnow),
     Column("deleted_at", DateTime, default=None, nullable=True),
