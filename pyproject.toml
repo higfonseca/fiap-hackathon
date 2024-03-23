@@ -20,6 +20,7 @@ pydantic-settings = "^2.0.3"
 aio-pika = "^9.4.0"
 marshmallow-dataclass = "^8.6.0"
 pytest-cov = "^4.1.0"
+passlib = "^1.7.4"
 
 
 [tool.poetry.dev-dependencies]

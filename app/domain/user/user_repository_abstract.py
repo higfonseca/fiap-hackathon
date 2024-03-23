@@ -16,3 +16,7 @@ class UserRepositoryAbstract(ABC):
     @abstractmethod
     async def find_by_work_email(self, work_email: str) -> User:
         pass
+
+    @abstractmethod
+    async def find_by_work_email_or_enrollment(self, identifier: str) -> User:
+        pass

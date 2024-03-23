@@ -39,3 +39,23 @@ class TestUserPostgresRepository(IsolatedAsyncioTestCase):
             await self.repository.find_by_work_email(self.user.work_email)
 
         assert_exception_body(UserErrors.not_found(), ctx)
+
+    async def test_find_by_work_email_or_enrollment_WHEN_called_with_enrollment_RETURNS_related_user(self):
+        await self.repository.save(self.user)
+
+        result = await self.repository.find_by_work_email_or_enrollment(self.user.enrollment)
+
+        self.assertEqual(self.user, result)
+
+    async def test_find_by_work_email_or_enrollment_WHEN_called_with_work_email_RETURNS_related_user(self):
+        await self.repository.save(self.user)
+
+        result = await self.repository.find_by_work_email_or_enrollment(self.user.work_email)
+
+        self.assertEqual(self.user, result)
+
+    async def test_find_by_work_email_or_enrollment_WHEN_user_not_exists_THEN_raises_not_found_exception(self):
+        with self.assertRaises(NotFoundException) as ctx:
+            await self.repository.find_by_work_email_or_enrollment(self.user.work_email)
+
+        assert_exception_body(UserErrors.not_found(), ctx)
