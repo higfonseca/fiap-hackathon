@@ -27,7 +27,7 @@ class RecordPostgresRepository(RecordRepositoryAbstract):
         except NoResultFound as _:
             return []
 
-    async def list_by_month_and_year(self, user_id: UUID, ref_month: int, ref_year: int) -> list[Record]:
+    async def list_by_user_month_and_year(self, user_id: UUID, ref_month: int, ref_year: int) -> list[Record]:
         try:
             return (
                 self.__session.query(Record)
