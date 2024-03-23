@@ -1,13 +1,10 @@
 from unittest import TestCase
 
-from freezegun import freeze_time
-
 from app.domain.record.record_logic import RecordLogic
 from app.domain.record.record_type import RecordType
 from tests.factories.domain_factories import RecordFactory
 
 
-@freeze_time("2024-03-23 10:00:00")
 class TestRecordLogic(TestCase):
     def setUp(self) -> None:
         self.record = RecordFactory(type=RecordType.OUT)
@@ -16,6 +13,7 @@ class TestRecordLogic(TestCase):
         result = RecordLogic.create(
             user=self.record.user,
             previous_record=RecordFactory(type=RecordType.IN),
+            ref_datetime=self.record.ref_datetime,
             id=self.record.id
         )
         self.assertEqual(self.record, result)
