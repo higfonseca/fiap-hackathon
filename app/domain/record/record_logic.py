@@ -10,19 +10,23 @@ class RecordLogic:
     @staticmethod
     def create(
         user: User,
-        previous_record: Record | None = None,
+        todays_previous_record: Record | None = None,
         ref_datetime: datetime = datetime.now(timezone.utc),
         id: UUID = uuid4(),
     ) -> Record:
         return Record(
             id=id,
             user=user,
-            type=RecordLogic.get_new_record_type(previous_record),
+            type=RecordLogic.get_new_record_type(todays_previous_record),
             ref_datetime=ref_datetime,
             ref_month=ref_datetime.month,
             ref_year=ref_datetime.year,
         )
 
     @staticmethod
-    def get_new_record_type(previous_record: Record | None = None) -> RecordType:
-        return RecordType.IN if previous_record is None or previous_record.type is RecordType.OUT else RecordType.OUT
+    def get_new_record_type(todays_previous_record: Record | None = None) -> RecordType:
+        return (
+            RecordType.IN
+            if todays_previous_record is None or todays_previous_record.type is RecordType.OUT
+            else RecordType.OUT
+        )

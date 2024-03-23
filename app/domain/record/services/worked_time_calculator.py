@@ -28,7 +28,7 @@ class WorkedTimeCalculator:
         if most_recent_record.type is RecordType.IN:
             default_clock_out = datetime.now(timezone.utc).replace(hour=18, minute=0, second=0, microsecond=0)
             missing_record = RecordLogic.create(
-                user=most_recent_record.user, previous_record=most_recent_record, ref_datetime=default_clock_out
+                user=most_recent_record.user, todays_previous_record=most_recent_record, ref_datetime=default_clock_out
             )
             sorted_records.insert(0, missing_record)
 
