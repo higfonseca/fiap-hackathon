@@ -7,7 +7,12 @@ from starlette import status
 from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 
-from app.domain.shared.custom_exceptions import DomainException, InfraException, NotFoundException
+from app.domain.shared.custom_exceptions import (
+    DomainException,
+    InfraException,
+    NotAuthenticatedException,
+    NotFoundException,
+)
 
 
 class CustomRouter(APIRoute):
@@ -21,6 +26,8 @@ class CustomRouter(APIRoute):
                 response: Response = await original_route_handler(request)
             except DomainException as exception:
                 response = __to_json_response(status.HTTP_400_BAD_REQUEST, exception)
+            except NotAuthenticatedException as exception:
+                response = __to_json_response(status.HTTP_401_UNAUTHORIZED, exception)
             except NotFoundException as exception:
                 response = __to_json_response(status.HTTP_404_NOT_FOUND, exception)
             except InfraException as exception:
