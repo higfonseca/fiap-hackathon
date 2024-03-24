@@ -1,14 +1,12 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from unittest import IsolatedAsyncioTestCase
 
-from freezegun import freeze_time
 
 from app.domain.record.record_type import RecordType
 from app.infrastructure.container import ApplicationContainer
 from tests.factories.domain_factories import UserFactory, RecordFactory
 
 
-@freeze_time("2024-03-23 10:00:00")
 class TestCreateRecord(IsolatedAsyncioTestCase):
     def setUp(self) -> None:
         self.now_utc = datetime.now(timezone.utc)
@@ -28,7 +26,7 @@ class TestCreateRecord(IsolatedAsyncioTestCase):
         self.assertEqual(RecordType.IN, persisted_record.type)
 
     async def test_call_WHEN_user_already_clocked_in_THEN_saves_new_record_with_type_clock_out(self):
-        record = RecordFactory(user=self.user, ref_datetime=self.now_utc, type=RecordType.IN)
+        record = RecordFactory(user=self.user, ref_datetime=self.now_utc - timedelta(seconds=10), type=RecordType.IN)
         await self.record_repository.save(record)
 
         await self.user_repository.save(self.user)
