@@ -18,6 +18,7 @@ services:
       - POSTGRES_PORT=5432
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=pass
+      - JWT_TOKEN_KEY=8db4f4e9751e9f51642cf4463b114726c83bde7c27754608060f7a1147db52db
     volumes:
       - ./:/build
     depends_on:
