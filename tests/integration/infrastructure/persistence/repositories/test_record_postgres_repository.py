@@ -11,7 +11,6 @@ from tests.factories.domain_factories import RecordFactory, UserFactory
 class TestRecordPostgresRepository(IsolatedAsyncioTestCase):
     def setUp(self) -> None:
         self.record = RecordFactory()
-        self.now_utc = datetime.now(timezone.utc)
         self.repository = ApplicationContainer.record_repository()
 
     async def test_save_WHEN_called_THEN_persists_informed_record(self):
@@ -69,10 +68,11 @@ class TestRecordPostgresRepository(IsolatedAsyncioTestCase):
     @freeze_time("2024-03-23 19:00:00")
     async def test_get_user_todays_last_record_WHEN_called_RETURNS_user_most_recent_record(self):
         earlier_today = datetime(2024, 3, 23, 10)
+        now_utc = datetime.now(timezone.utc)
         user = UserFactory()
         record = RecordFactory(user=user, ref_datetime=datetime(2020, 1, 1))
         record2 = RecordFactory(user=user, ref_datetime=earlier_today)
-        record3 = RecordFactory(user=user, ref_datetime=self.now_utc)
+        record3 = RecordFactory(user=user, ref_datetime=now_utc)
         await self.repository.save(record)
         await self.repository.save(record2)
         await self.repository.save(record3)

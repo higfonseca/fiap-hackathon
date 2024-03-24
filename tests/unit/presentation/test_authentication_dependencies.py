@@ -1,13 +1,13 @@
 from unittest import TestCase
 
 from app.domain.shared.custom_exceptions import NotAuthenticatedException
-from app.presentation.dependencies.authentication_dependencies import AuthenticationDependencies
 
+from app.presentation.helpers.authentication_helper import AuthenticationHelper
 from app.shared.services.jwt_token_service import JwtTokenService
 from tests.factories.domain_factories import UserFactory
 
 
-class TestAuthenticationDependencies(TestCase):
+class TestAuthenticationHelper(TestCase):
     def setUp(self) -> None:
         self.jwt_token_service = JwtTokenService()
         self.user = UserFactory()
@@ -16,7 +16,7 @@ class TestAuthenticationDependencies(TestCase):
         token_service = JwtTokenService()
         token = token_service.generate_access_token(self.user)
 
-        result = AuthenticationDependencies.get_current_user_id(token=token.access_token)
+        result = AuthenticationHelper.get_current_user_id(token=token.access_token)
 
         self.assertEqual(str(result), self.user.id)
 
@@ -24,4 +24,4 @@ class TestAuthenticationDependencies(TestCase):
         invalid_token = "some.invalid.token"
 
         with self.assertRaises(NotAuthenticatedException):
-            AuthenticationDependencies.get_current_user_id(token=invalid_token)
+            AuthenticationHelper.get_current_user_id(token=invalid_token)
