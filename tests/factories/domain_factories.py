@@ -5,8 +5,8 @@ from factory import fuzzy
 from faker import Faker
 from faker.providers import internet
 
+from app.domain.record.enums import RecordType
 from app.domain.record.record import Record
-from app.domain.record.record_type import RecordType
 from app.domain.user.user import User
 
 fake = Faker()

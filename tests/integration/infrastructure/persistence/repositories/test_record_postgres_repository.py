@@ -3,7 +3,7 @@ from unittest import IsolatedAsyncioTestCase
 
 from freezegun import freeze_time
 
-from app.domain.record.record_type import RecordType
+from app.domain.record.enums import RecordType
 from app.infrastructure.container import ApplicationContainer
 from tests.factories.domain_factories import RecordFactory, UserFactory
 

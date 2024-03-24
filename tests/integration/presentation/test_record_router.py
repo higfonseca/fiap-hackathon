@@ -2,7 +2,7 @@ from unittest import IsolatedAsyncioTestCase
 
 from starlette import status
 
-from app.domain.record.record_type import RecordType
+from app.domain.record.enums import RecordType
 from app.infrastructure.container import ApplicationContainer
 from tests.factories.domain_factories import UserFactory
 

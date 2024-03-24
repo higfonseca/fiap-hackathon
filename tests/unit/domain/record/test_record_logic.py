@@ -1,8 +1,8 @@
 from datetime import datetime
 from unittest import TestCase
 
+from app.domain.record.enums import RecordType
 from app.domain.record.record_logic import RecordLogic
-from app.domain.record.record_type import RecordType
 from tests.factories.domain_factories import RecordFactory
 
 
