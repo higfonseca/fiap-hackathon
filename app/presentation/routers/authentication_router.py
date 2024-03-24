@@ -5,10 +5,10 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from starlette import status
 
-from app.application.dtos.token import Token
 from app.application.use_cases.user.authenticate_user import AuthenticateUser
 from app.infrastructure.container import ApplicationContainer
 from app.presentation.helpers.custom_router import APICustomRouter
+from app.shared.dtos.token import Token
 
 router = APICustomRouter(prefix="/authenticate")
 

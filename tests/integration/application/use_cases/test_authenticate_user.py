@@ -1,9 +1,9 @@
 from unittest import IsolatedAsyncioTestCase
 
-from app.application.services.jwt_token_service import JwtTokenService
 from app.domain.shared.custom_exceptions import NotAuthenticatedException
 from app.infrastructure.container import ApplicationContainer
 from app.application.use_cases.user.authenticate_user import AuthenticateUser
+from app.shared.services.jwt_token_service import JwtTokenService
 from tests.factories.domain_factories import UserFactory
 
 from freezegun import freeze_time

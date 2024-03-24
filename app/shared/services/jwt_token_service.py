@@ -1,11 +1,10 @@
-# mypy: disable-error-code="import-untyped, no-any-return"
 from datetime import datetime, timedelta, timezone
 
 from jose import jwt
 
-from app.application.dtos.token import Token
 from app.domain.user.user import User
 from app.infrastructure.settings import settings
+from app.shared.dtos.token import Token
 
 
 class JwtTokenService:
@@ -21,3 +20,6 @@ class JwtTokenService:
         encoded_jwt = jwt.encode(data_to_encode, settings.jwt_token_key, algorithm=self.ALGORITHM)
 
         return Token(access_token=encoded_jwt, token_type=token_type)
+
+    def decode(self, token: Token) -> dict[str, str]:
+        return jwt.decode(token, settings.jwt_token_key, algorithms=[self.ALGORITHM])  # type:ignore[arg-type]
