@@ -33,5 +33,4 @@ class ApplicationContainer(DeclarativeContainer):
     get_records = Singleton(
         GetRecords, worked_time_calculator=worked_time_calculator, record_repository=record_repository
     )
-
     authenticate_user = Factory(AuthenticateUser, user_repository=user_repository)
