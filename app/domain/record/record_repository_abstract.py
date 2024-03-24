@@ -16,3 +16,7 @@ class RecordRepositoryAbstract(ABC):
     @abstractmethod
     async def list_by_user_month_and_year(self, user_id: UUID, ref_month: int, ref_year: int) -> list[Record]:
         pass
+
+    @abstractmethod
+    async def get_user_todays_last_record(self, user_id: UUID) -> Record | None:
+        pass

@@ -1,6 +1,8 @@
 import logging
+from datetime import datetime, timezone
 from uuid import UUID
 
+from sqlalchemy import func
 from sqlalchemy.exc import NoResultFound  # type:ignore[attr-defined]
 from sqlalchemy.orm import Session
 
@@ -40,3 +42,18 @@ class RecordPostgresRepository(RecordRepositoryAbstract):
             )
         except NoResultFound as _:
             return []
+
+    async def get_user_todays_last_record(self, user_id: UUID) -> Record | None:
+        try:
+            today_utc = datetime.now(timezone.utc).date()
+            return (
+                self.__session.query(Record)
+                .filter(
+                    Record.user_id == user_id,  # type:ignore[attr-defined]
+                    func.DATE(Record.ref_datetime) == today_utc,
+                )
+                .order_by(Record.ref_datetime.desc())  # type:ignore[attr-defined]
+                .first()
+            )
+        except NoResultFound as _:
+            return None
