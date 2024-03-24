@@ -1,5 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from unittest import IsolatedAsyncioTestCase
+
+from freezegun import freeze_time
 
 from app.domain.record.record_type import RecordType
 from app.infrastructure.container import ApplicationContainer
@@ -9,7 +11,7 @@ from tests.factories.domain_factories import RecordFactory, UserFactory
 class TestRecordPostgresRepository(IsolatedAsyncioTestCase):
     def setUp(self) -> None:
         self.record = RecordFactory()
-        self.database_session = ApplicationContainer.session_provider()
+        self.now_utc = datetime.now(timezone.utc)
         self.repository = ApplicationContainer.record_repository()
 
     async def test_save_WHEN_called_THEN_persists_informed_record(self):
@@ -63,3 +65,30 @@ class TestRecordPostgresRepository(IsolatedAsyncioTestCase):
         )
 
         self.assertCountEqual([record, record2], result)
+
+    @freeze_time("2024-03-23 19:00:00")
+    async def test_get_user_todays_last_record_WHEN_called_RETURNS_user_most_recent_record(self):
+        earlier_today = datetime(2024, 3, 23, 10)
+        user = UserFactory()
+        record = RecordFactory(user=user, ref_datetime=datetime(2020, 1, 1))
+        record2 = RecordFactory(user=user, ref_datetime=earlier_today)
+        record3 = RecordFactory(user=user, ref_datetime=self.now_utc)
+        await self.repository.save(record)
+        await self.repository.save(record2)
+        await self.repository.save(record3)
+
+        result = await self.repository.get_user_todays_last_record(user.id)
+
+        self.assertEqual(record3, result)
+
+    @freeze_time("2024-03-23 19:00:00")
+    async def test_get_user_todays_last_record_WHEN_no_record_today_RETURNS_None(self):
+        user = UserFactory()
+        record = RecordFactory(user=user, ref_datetime=datetime(2020, 1, 1))
+        record2 = RecordFactory(user=user, ref_datetime=datetime(2024, 1, 1))
+        await self.repository.save(record)
+        await self.repository.save(record2)
+
+        result = await self.repository.get_user_todays_last_record(user.id)
+
+        self.assertIsNone(result)
