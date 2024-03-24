@@ -1,7 +1,5 @@
-from datetime import datetime, timezone
 from unittest import IsolatedAsyncioTestCase
 
-from freezegun import freeze_time
 from starlette import status
 
 from app.domain.record.record_type import RecordType
@@ -9,12 +7,10 @@ from app.infrastructure.container import ApplicationContainer
 from tests.factories.domain_factories import UserFactory
 
 
-@freeze_time("2024-03-23 10:00:00")
 class TestRecordRouter(IsolatedAsyncioTestCase):
     def setUp(self) -> None:
         self.base_route = "/records"
         self.user = UserFactory()
-        self.now_utc = datetime.now(timezone.utc)
 
         self.user_repository = ApplicationContainer.user_repository()
         self.record_repository = ApplicationContainer.record_repository()
