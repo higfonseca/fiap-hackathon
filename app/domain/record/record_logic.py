@@ -9,10 +9,10 @@ from app.domain.user.user import User
 class RecordLogic:
     @staticmethod
     def create(
-            user: User,
-            todays_previous_record: Record | None = None,
-            ref_datetime: datetime = datetime.now(timezone.utc),
-            id: UUID = uuid4(),
+        user: User,
+        todays_previous_record: Record | None = None,
+        ref_datetime: datetime = datetime.now(timezone.utc),
+        id: UUID = uuid4(),
     ) -> Record:
         return Record(
             id=id,

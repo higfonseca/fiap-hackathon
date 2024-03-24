@@ -5,8 +5,8 @@ from dependency_injector.containers import DeclarativeContainer  # pylint: disab
 from dependency_injector.providers import Configuration, Factory, Singleton
 
 from app.application.use_cases.record.create_record import CreateRecord
-from app.application.use_cases.user.authenticate_user import AuthenticateUser
 from app.application.use_cases.record.get_records import GetRecords
+from app.application.use_cases.user.authenticate_user import AuthenticateUser
 from app.domain.record.services.worked_time_calculator import WorkedTimeCalculator
 from app.infrastructure.persistence.database import SessionProvider  # type:ignore[attr-defined]
 from app.infrastructure.persistence.mapping_configuration import import_mappers

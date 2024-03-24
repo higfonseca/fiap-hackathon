@@ -5,6 +5,7 @@ from starlette import status
 from app.domain.record.enums import RecordType
 from app.infrastructure.container import ApplicationContainer
 from tests.factories.domain_factories import UserFactory
+from tests.helpers.auth_token_helper import AuthTokenHelper
 
 
 class TestRecordRouter(IsolatedAsyncioTestCase):
@@ -17,8 +18,9 @@ class TestRecordRouter(IsolatedAsyncioTestCase):
 
     async def test_post_WHEN_called_RETURNS_201(self):
         await self.user_repository.save(self.user)
+        auth_header = AuthTokenHelper.get_valid_token_headers(self.user)
 
-        response = self.client.post(url=f"{self.base_route}/{self.user.id}")
+        response = self.client.post(url=f"{self.base_route}", headers=auth_header)
 
         persisted_record = await self.record_repository.get_user_todays_last_record(user_id=self.user.id)
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
@@ -26,5 +28,13 @@ class TestRecordRouter(IsolatedAsyncioTestCase):
         self.assertEqual(RecordType.IN, persisted_record.type)
 
     async def test_post_WHEN_user_not_exists_RETURNS_404(self):
-        response = self.client.post(url=f"{self.base_route}/{self.user.id}")
+        auth_header = AuthTokenHelper.get_valid_token_headers(self.user)
+
+        response = self.client.post(url=f"{self.base_route}", headers=auth_header)
+
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
+
+    async def test_post_WHEN_user_not_authenticated_RETURNS_401(self):
+        response = self.client.post(url=f"{self.base_route}", headers=AuthTokenHelper.get_invalid_token_headers())
+
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
