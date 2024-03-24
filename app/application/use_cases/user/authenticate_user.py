@@ -1,9 +1,9 @@
-from app.application.dtos.token import Token
-from app.application.services.jwt_token_service import JwtTokenService
 from app.domain.shared.custom_exceptions import NotFoundException
 from app.domain.user.user_errors import UserErrors
 from app.domain.user.user_repository_abstract import UserRepositoryAbstract
+from app.shared.dtos.token import Token
 from app.shared.password_hash_utils import PasswordHashUtils
+from app.shared.services.jwt_token_service import JwtTokenService
 
 
 class AuthenticateUser:
