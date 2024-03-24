@@ -3,12 +3,12 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from app.infrastructure.container import ApplicationContainer
 from app.infrastructure.settings import settings
-from app.presentation.routers import health_router, record_router
+from app.presentation.routers import authentication_router, health_router, record_router
 
 
 def get_app() -> FastAPI:
     container = ApplicationContainer()
-    routers = [health_router, record_router]
+    routers = [health_router, record_router, authentication_router]
     tags_metadata = [metadata for router in routers if hasattr(router, "metadata") for metadata in router.metadata]
 
     app = FastAPI(

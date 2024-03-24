@@ -1,4 +1,3 @@
-# mypy: disable-error-code="import-untyped, no-any-return"
 from passlib.context import CryptContext
 
 

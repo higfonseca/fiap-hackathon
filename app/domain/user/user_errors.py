@@ -1,4 +1,9 @@
-from app.domain.shared.custom_exceptions import DomainException, InfraException, NotFoundException
+from app.domain.shared.custom_exceptions import (
+    DomainException,
+    InfraException,
+    NotAuthenticatedException,
+    NotFoundException,
+)
 
 
 class UserErrors:
@@ -13,3 +18,7 @@ class UserErrors:
     @staticmethod
     def duplicated() -> DomainException:
         return DomainException("User already exists")
+
+    @staticmethod
+    def not_authenticated() -> NotAuthenticatedException:
+        return NotAuthenticatedException("User could not be authenticated")

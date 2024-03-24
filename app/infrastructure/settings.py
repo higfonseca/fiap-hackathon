@@ -28,6 +28,7 @@ class Settings(BaseSettings):  # type: ignore[misc]
         username=database_user,
         password=database_password,
     )
+    jwt_token_key: str = os.getenv("JWT_TOKEN_KEY") or "default"
 
     @property
     def trusted_hosts(self) -> list[str]:

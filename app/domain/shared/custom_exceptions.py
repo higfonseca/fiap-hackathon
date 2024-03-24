@@ -13,5 +13,10 @@ class InfraException(Exception):
         super().__init__(description)
 
 
+class NotAuthenticatedException(Exception):
+    def __init__(self, description: str) -> None:
+        super().__init__(description)
+
+
 class DuplicatedException(DomainException):
     pass
