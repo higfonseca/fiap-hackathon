@@ -9,7 +9,7 @@ from app.domain.user.user_errors import UserErrors
 from app.shared.services.jwt_token_service import JwtTokenService
 
 
-class AuthenticationDependencies:
+class AuthenticationHelper:
     @staticmethod
     def get_current_user_id(token: Annotated[str, Depends(OAuth2PasswordBearer(tokenUrl="token"))]) -> UUID:
         not_authenticated_exception = UserErrors.not_authenticated()
