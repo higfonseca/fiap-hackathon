@@ -4,6 +4,7 @@ import logging
 from dependency_injector.containers import DeclarativeContainer  # pylint: disable=no-name-in-module
 from dependency_injector.providers import Configuration, Factory
 
+from app.application.use_cases.user.authenticate_user import AuthenticateUser
 from app.infrastructure.persistence.database import SessionProvider  # type:ignore[attr-defined]
 from app.infrastructure.persistence.mapping_configuration import import_mappers
 from app.infrastructure.persistence.repositories.record_postgres_repository import RecordPostgresRepository
@@ -24,3 +25,4 @@ class ApplicationContainer(DeclarativeContainer):
     # PROVIDERS
 
     # USE CASES
+    authenticate_user = Factory(AuthenticateUser, user_repository=user_repository)
