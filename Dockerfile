@@ -11,6 +11,7 @@ ENTRYPOINT ["/build/pipeline/docker_entrypoint.sh"]
 COPY ./pyproject.toml .
 COPY ./poetry.lock .
 COPY ./.pylintrc .
+COPY ./manifests .
 
 RUN mkdir -p ./app && mkdir -p ./pipeline && mkdir -p ./tests
 
