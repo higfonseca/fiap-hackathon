@@ -4,8 +4,8 @@ from sqlalchemy import Column, DateTime, Enum, ForeignKey, Integer, Table
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
+from app.domain.record.enums import RecordType
 from app.domain.record.record import Record
-from app.domain.record.record_type import RecordType
 from app.domain.user.user import User
 from app.infrastructure.persistence.create_database import metadata
 from app.infrastructure.persistence.mappers import mapper_registry

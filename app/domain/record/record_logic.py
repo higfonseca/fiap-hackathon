@@ -1,8 +1,8 @@
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
+from app.domain.record.enums import RecordType
 from app.domain.record.record import Record
-from app.domain.record.record_type import RecordType
 from app.domain.user.user import User
 
 
