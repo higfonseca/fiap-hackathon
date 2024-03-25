@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fiap-hackathon
+  namespace: fiap-hackathon
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fiap-hackathon
+  template:
+    metadata:
+      labels:
+        app: fiap-hackathon
+    spec:
+      containers:
+        - name: fiap-hackathon
+          image: 633489659124.dkr.ecr.us-east-1.amazonaws.com/fiap-hackathon:4c275ba0ad3c353f1d4bb75a0705ab920b65c13b
+          ports:
+            - containerPort: 8000
+          env:
+            - name: ENVIRONMENT
+              value: production
+            - name: WATCHFILES_FORCE_POLLING
+              value: "true"
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/sh"
+                  - "-c"
+                  - >
+                    set -e;
+                    poetry run python app/infrastructure/persistence/create_database.py &&
+                    poetry run alembic upgrade head;
