@@ -11,12 +11,13 @@ ENTRYPOINT ["/build/pipeline/docker_entrypoint.sh"]
 COPY ./pyproject.toml .
 COPY ./poetry.lock .
 COPY ./.pylintrc .
+COPY ./alembic.ini .
+COPY ./app/infrastructure/persistence/alembic ./alembic
 
 RUN mkdir -p ./app && mkdir -p ./pipeline && mkdir -p ./tests
 
 COPY ./app ./app
 COPY ./pipeline ./pipeline
-COPY ./docker-compose-ci.yml ./docker-compose-ci.yml
 
 RUN poetry config virtualenvs.create false \
   && poetry update \
