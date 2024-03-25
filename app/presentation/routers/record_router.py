@@ -43,14 +43,3 @@ async def create_report(
     use_case: CreateReport = Depends(Provide[ApplicationContainer.create_report]),
 ) -> None:
     await use_case(user_id=user_id)
-
-
-@router.get("", status_code=status.HTTP_200_OK)
-@inject
-async def get_records(
-    user_id: Annotated[UUID, Depends(AuthenticationHelper.get_current_user_id)],
-    ref_month: int = Query(...),
-    ref_year: int = Query(...),
-    use_case: GetRecords = Depends(Provide[ApplicationContainer.get_records]),
-) -> GetRecordsOutput:
-    return await use_case(user_id=user_id, ref_month=ref_month, ref_year=ref_year)
