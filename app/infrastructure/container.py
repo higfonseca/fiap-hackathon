@@ -5,6 +5,7 @@ from dependency_injector.containers import DeclarativeContainer  # pylint: disab
 from dependency_injector.providers import Configuration, Factory, Singleton
 
 from app.application.use_cases.record.create_record import CreateRecord
+from app.application.use_cases.record.create_report import CreateReport
 from app.application.use_cases.record.get_records import GetRecords
 from app.application.use_cases.user.authenticate_user import AuthenticateUser
 from app.domain.record.services.worked_time_calculator import WorkedTimeCalculator
@@ -12,6 +13,7 @@ from app.infrastructure.persistence.database import SessionProvider  # type:igno
 from app.infrastructure.persistence.mapping_configuration import import_mappers
 from app.infrastructure.persistence.repositories.record_postgres_repository import RecordPostgresRepository
 from app.infrastructure.persistence.repositories.user_postgres_repository import UserPostgresRepository
+from app.infrastructure.services.notification_provider import NotificationProvider
 
 
 class ApplicationContainer(DeclarativeContainer):
@@ -25,6 +27,9 @@ class ApplicationContainer(DeclarativeContainer):
     user_repository = Factory(UserPostgresRepository, database_session=session_provider)
     record_repository = Factory(RecordPostgresRepository, database_session=session_provider)
 
+    # PROVIDERS
+    notification_provider = Singleton(NotificationProvider)
+
     # SERVICES
     worked_time_calculator = Singleton(WorkedTimeCalculator)
 
@@ -34,3 +39,9 @@ class ApplicationContainer(DeclarativeContainer):
         GetRecords, worked_time_calculator=worked_time_calculator, record_repository=record_repository
     )
     authenticate_user = Factory(AuthenticateUser, user_repository=user_repository)
+    create_report = Singleton(
+        CreateReport,
+        get_records_usecase=get_records,
+        notification_provider=notification_provider,
+        user_repository=user_repository,
+    )
