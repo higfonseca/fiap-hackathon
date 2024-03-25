@@ -51,7 +51,7 @@ class TestRecordRouter(IsolatedAsyncioTestCase):
             url=f"{self.base_route}?ref_month={ref_month}&ref_year={ref_year}",
             headers=auth_header
         )
-        breakpoint()
+
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
     async def test_get_WHEN_user_not_authenticated_RETURNS_401(self):
