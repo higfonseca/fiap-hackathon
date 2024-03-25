@@ -36,18 +36,18 @@ jobs:
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f /build/manifests/namespace.yml
+          args: apply -f /build/namespace.yml
 
       - name: Create service
         uses: actions-hub/kubectl@master
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f /build/manifests/service.yml
+          args: apply -f /build/service.yml
 
       - name: Deploy
         uses: actions-hub/kubectl@master
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f /build/manifests/deployment.yml
+          args: apply -f /build/deployment.yml

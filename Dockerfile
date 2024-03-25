@@ -18,7 +18,6 @@ RUN mkdir -p ./app && mkdir -p ./pipeline && mkdir -p ./tests
 
 COPY ./app ./app
 COPY ./pipeline ./pipeline
-COPY ./manifests ./manifests
 
 RUN poetry config virtualenvs.create false \
   && poetry update \
