@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: fiap-hackathon
-          image: 633489659124.dkr.ecr.us-east-1.amazonaws.com/fiap-hackathon:latest
+          image: 633489659124.dkr.ecr.us-east-1.amazonaws.com/fiap-hackathon:4c275ba0ad3c353f1d4bb75a0705ab920b65c13b
           ports:
             - containerPort: 8000
           env:

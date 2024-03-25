@@ -22,32 +22,15 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      #      - name: Build, tag, and push image to Amazon ECR
-      #        env:
-      #          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #          ECR_REPOSITORY: fiap-hackathon
-      #          IMAGE_TAG: ${{ github.sha }}
-      #        run: |
-      #          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-      #          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-      #      - name: Create namespace
-      #        uses: actions-hub/kubectl@master
-      #        env:
-      #          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
-      #        with:
-      #          args: apply -f manifests/namespace.yml
-
-      - name: Create service
-        uses: actions-hub/kubectl@master
+      - name: Build, tag, and push image to Amazon ECR
         env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
-        with:
-          args: apply -f manifests/service.yml
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: fiap-hackathon
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Deploy
-        uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
-        with:
-          args: apply -f manifests/deployment.yml
+        run: |
+          echo "apply -f manifests/deployment.yml"
