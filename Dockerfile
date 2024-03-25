@@ -12,7 +12,7 @@ COPY ./pyproject.toml .
 COPY ./poetry.lock .
 COPY ./.pylintrc .
 
-RUN mkdir -p ./app && mkdir -p ./pipeline && mkdir -p ./tests
+RUN mkdir -p ./app && mkdir -p ./pipeline && mkdir -p ./tests && mkdir -p ./manifests
 
 COPY ./app ./app
 COPY ./pipeline ./pipeline
