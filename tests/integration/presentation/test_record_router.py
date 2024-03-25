@@ -64,6 +64,26 @@ class TestRecordRouter(IsolatedAsyncioTestCase):
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
+    async def test_post_create_report_WHEN_called_RETURNS_201(self):
+        await self.user_repository.save(self.user)
+        record1 = RecordFactory(
+            ref_datetime=datetime(2024, 2, 21, 9, 0).replace(tzinfo=timezone.utc),
+            type=RecordType.IN,
+            user=self.user,
+        )
+        record2 = RecordFactory(
+            ref_datetime=datetime(2024, 2, 21, 12, 0).replace(tzinfo=timezone.utc),
+            type=RecordType.OUT,
+            user=self.user,
+        )
+        await self.record_repository.save(record1)
+        await self.record_repository.save(record2)
+        auth_header = AuthTokenHelper.get_valid_token_headers(self.user)
+
+        response = self.client.post(url=f"{self.base_route}/report", headers=auth_header)
+
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
     async def __seed(self) -> None:
         record1 = RecordFactory(
             ref_datetime=datetime(2024, 3, 21, 9, 0).replace(tzinfo=timezone.utc),

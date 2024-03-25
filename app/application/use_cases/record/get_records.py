@@ -14,5 +14,7 @@ class GetRecords:
         records = await self.__record_repository.list_by_user_month_and_year(
             user_id=user_id, ref_month=ref_month, ref_year=ref_year
         )
+
         worked_time = self.__worked_time_calculator.get_records_with_missing_clock_outs(records)
+
         return GetRecordsOutput.to_output(worked_time=worked_time, ref_month=ref_month, ref_year=ref_year)

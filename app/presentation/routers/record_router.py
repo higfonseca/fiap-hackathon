@@ -6,6 +6,7 @@ from fastapi import Depends, Query
 from starlette import status
 
 from app.application.use_cases.record.create_record import CreateRecord
+from app.application.use_cases.record.create_report import CreateReport
 from app.application.use_cases.record.dtos.get_records_output import GetRecordsOutput
 from app.application.use_cases.record.get_records import GetRecords
 from app.infrastructure.container import ApplicationContainer
@@ -33,3 +34,12 @@ async def get_records(
     use_case: GetRecords = Depends(Provide[ApplicationContainer.get_records]),
 ) -> GetRecordsOutput:
     return await use_case(user_id=user_id, ref_month=ref_month, ref_year=ref_year)
+
+
+@router.post("/report", status_code=status.HTTP_201_CREATED)
+@inject
+async def create_report(
+    user_id: Annotated[UUID, Depends(AuthenticationHelper.get_current_user_id)],
+    use_case: CreateReport = Depends(Provide[ApplicationContainer.create_report]),
+) -> None:
+    await use_case(user_id=user_id)
