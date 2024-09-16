@@ -8,12 +8,6 @@ Manage employee's clock in/out
 
 **Turma 2SOAT - Grupo 25**
 
-Lucas Leal de Oliveira Martins - rm349524 <br>
-lucaslealm@gmail.com
-
-Hígor Sampaio da Fonseca - rm349608 <br>
-higfonseca@gmail.com
-
 ---
 
 ## Project Documentation
